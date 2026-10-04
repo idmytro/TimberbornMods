@@ -1,5 +1,9 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+	<PropertyGroup>
+		<ModdableToolGroupsPath Condition="'$(ModdableToolGroupsPath)'==''">$(GameModsFolder)ModdableToolGroups\version-1.1\**\*.dll</ModdableToolGroupsPath>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Using Include="ConfigurableToolGroups" />
 		<Using Include="ConfigurableToolGroups.Services" />
@@ -7,7 +11,7 @@
 		<Using Include="ConfigurableToolGroups.Models" />
 		<Using Include="ConfigurableToolGroups.UI" />
 
-		<Reference Include="$(GameModsFolder)ModdableToolGroups\version-1.1\**\*.dll" Private="false" />	
+		<Reference Include="$(ModdableToolGroupsPath)" Private="false" />
 	</ItemGroup>
 
 </Project>

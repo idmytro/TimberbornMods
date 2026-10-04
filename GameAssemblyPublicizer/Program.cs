@@ -2,16 +2,19 @@
 using System.Collections.Immutable;
 
 ImmutableArray<string> Prefixes = ["Bindito.", "Timberborn.", "Unity"];
-const string GameAssembliesPath = @"D:\Software\SteamLibrary\steamapps\common\Timberborn\Timberborn_Data\Managed";
+var gameAssembliesPath = Environment.GetEnvironmentVariable("TIMBERBORN_ASSEMBLIES_PATH")
+    ?? @"D:\Software\SteamLibrary\steamapps\common\Timberborn\Timberborn_Data\Managed";
+var modSettingsScriptsPath = Environment.GetEnvironmentVariable("TIMBERBORN_MOD_SETTINGS_SCRIPTS_PATH")
+    ?? @"D:\Software\SteamLibrary\steamapps\workshop\content\1062090\3283831040\version-1.1\Scripts";
 ImmutableArray<string> SpecialFolders = [
-    @"D:\Software\SteamLibrary\steamapps\workshop\content\1062090\3283831040\version-1.1\Scripts", // Mod Settings
+    modSettingsScriptsPath, // Mod Settings
 ];
 ImmutableArray<KeyValuePair<string, string>> OtherMods = [
     //new(@"D:\Software\SteamLibrary\steamapps\workshop\content\1062090\3275060459\version-0.7\Scripts", "ShantySpeaker"),
     //new(@"C:\Users\lukev\OneDrive\Documents\Timberborn\Mods\ModdableWeather\version-0.7", "ModdableWeather"),
 ];
 
-var outputFolder = Path.Combine(FindCsProjFolder(Environment.CurrentDirectory), "out");
+var outputFolder = Path.Combine(FindCsProjFolder(AppContext.BaseDirectory), "out");
 var commonOutput = Path.Combine(outputFolder, "common");
 
 if (Directory.Exists(outputFolder))
@@ -25,7 +28,7 @@ Directory.CreateDirectory(commonOutput);
 // Common
 foreach (var prefix in Prefixes)
 {
-    foreach (var dll in Directory.EnumerateFiles(GameAssembliesPath, $"{prefix}*.dll", SearchOption.AllDirectories))
+    foreach (var dll in Directory.EnumerateFiles(gameAssembliesPath, $"{prefix}*.dll", SearchOption.AllDirectories))
     {
         PublicizeFile(dll, commonOutput);
     }
