@@ -91,7 +91,7 @@
                     "Y": 0,
                     "Z": 0
                 },
-                "Directions": "Down, Left, Up",
+                "Directions": "Down, Left, Right",
                 "State": "Open"
             }
         ]
